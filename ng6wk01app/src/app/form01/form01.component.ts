@@ -10,6 +10,8 @@ import { Address } from '../address';
     } )
 export class Form01Component implements OnInit {
 
+    description = "Form for address";
+
     address = new Address();
 
     constructor() { }
