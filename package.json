@@ -1,7 +1,7 @@
 {
     "name": "ng6wk01",
     "version": "0.0.1",
-    "description": "Outer npm package to contain angular cli to try to avoid global install, with the real app in an inner npm package: a Playground with Typescript2 and Angulat6 without Ionic & Cordova.",
+    "description": "Outer npm package to contain angular cli to try to avoid global install, with the real app in an inner npm package: a Playground with Typescript2 and Angular6 without Ionic & Cordova.",
     "keywords": [
         "angular",
         "single page application"

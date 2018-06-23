@@ -1,16 +1,14 @@
 #!/bin/bash
 
-# ng6wk01 buildandrun.sh
+# ng6wk01 test.sh
 # 201806230356
-
-echo "ng6wk01 buildandrun.sh"
-date
 
 # cd ~/Works/MDD/ng6wk01/SVNs_ng6wk01/ng6wk01_trunk/ng6wk01/ng6wk01app/src
 # cd  /home/acv/Works/MDD/ng6wk01/SVNs_ng6wk01/ng6wk01_trunk/ng6wk01/ng6wk01app
 
-./node_modules/.bin/ng serve --open
 
-# Opens browser to visit
-#   http://localhost:4200/
+echo "ng6wk01 test.sh"
+date
+
+./node_modules/.bin/ng test
 

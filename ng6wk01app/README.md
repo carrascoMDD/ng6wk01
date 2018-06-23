@@ -1,5 +1,7 @@
 # Ng6wk01app
 
+Playground with Typescript2 and Angular6 without Ionic & Cordova.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Development server

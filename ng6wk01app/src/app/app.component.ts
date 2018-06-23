@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
         styleUrls:   [ './app.component.css' ]
     } )
 export class AppComponent {
-    title = 'ng6wk01 Playground with Typescript2 and Angulat6 without Ionic & Cordova';
+    title = 'ng6wk01 Playground with Typescript2 and Angular6 without Ionic & Cordova';
 
 
     constructor( public auth: AuthService ) {

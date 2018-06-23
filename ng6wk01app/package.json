@@ -1,7 +1,7 @@
 {
   "name": "ng6wk01app",
   "version": "0.0.1",
-  "description": "Playground with Typescript2 and Angulat6 without Ionic & Cordova.",
+  "description": "Playground with Typescript2 and Angular6 without Ionic & Cordova.",
   "license": "EUPL-1.1",
   "author": {
     "name": "Antonio Carrasco Valero",
@@ -63,6 +63,7 @@
     "karma-coverage-istanbul-reporter": "~2.0.0",
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-spec-reporter": "0.0.32",
     "protractor": "~5.3.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
