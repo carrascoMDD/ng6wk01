@@ -1,7 +1,7 @@
 import { AppPage } from './app.po';
 
 
-describe( 'workspace-project App', () => {
+describe( 'ng6wk01 App', () => {
     let page: AppPage;
 
     beforeEach( () => {
@@ -10,6 +10,6 @@ describe( 'workspace-project App', () => {
 
     it( 'should display welcome message', () => {
         page.navigateTo();
-        expect( page.getParagraphText() ).toEqual( "ng6wk01 Welcome" );
+        expect( page.getHeaderText() ).toEqual( "ng6wk01 Welcome" );
     } );
 } );

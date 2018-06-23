@@ -34,22 +34,22 @@
                 </button>
             </div>
             <div>
-                <a routerLink="/">
+                <a id="domid_blog_anchor" routerLink="/">
                     Material Blog
                 </a>
             </div>
             <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
                 <ul fxLayout fxLayoutGap="20px" class="navigation-items">
                     <li>
-                        <a
-                            *ngIf="!auth.isAuthenticated()"
+                        <a id="domid_login_anchor"
+                           *ngIf="!auth.isAuthenticated()"
                             (click)="auth.login()">
                             <mat-icon class="icon">input</mat-icon>
                             <span  class="label">Login</span>
                         </a>
                     </li>
                     <li>
-                        <a
+                        <a id="domid_home_anchor"
                             *ngIf="auth.isAuthenticated()"
                             routerLink="/">
                             <mat-icon class="icon">home</mat-icon>
@@ -57,14 +57,14 @@
                         </a>
                     </li>
                     <li>
-                        <a
+                        <a id="domid_dashboard_anchor"
                             routerLink="/dashboard">
                             <mat-icon class="icon">dashboard</mat-icon>
                             <span class="label">Dashboard</span>
                         </a>
                     </li>
                     <li>
-                        <a
+                        <a id="domid_logout_anchor"
                             *ngIf="auth.isAuthenticated()"
                             (click)="auth.logout()" type="button"
                         >
