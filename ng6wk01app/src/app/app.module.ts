@@ -3,7 +3,6 @@ import { NgModule }      from '@angular/core';
 
 import { AppComponent }            from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavBarAndSideComponent }  from './nav-bar-and-side/nav-bar-and-side.component';
 import { LayoutModule }            from '@angular/cdk/layout';
 import { FlexLayoutModule }        from '@angular/flex-layout';
 import { FormsModule }             from '@angular/forms';
@@ -29,7 +28,6 @@ import { PostDialogComponent } from './post-dialog/post-dialog.component';
     {
         declarations:    [
             AppComponent,
-            NavBarAndSideComponent,
             Form01Component,
             WelcomeComponent,
             DashboardComponent,
