@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'ng6wk01 Playground with Typescript2 and Angulat6 without Ionic & Cordova';
 }
