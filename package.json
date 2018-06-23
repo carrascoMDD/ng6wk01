@@ -1,0 +1,38 @@
+{
+    "name": "ng6wk01",
+    "version": "0.0.1",
+    "description": "Outer npm package to contain angular cli to try to avoid global install, with the real app in an inner npm package: a Playground with Typescript2 and Angulat6 without Ionic & Cordova.",
+    "keywords": [
+        "angular",
+        "single page application"
+    ],
+    "homepage": "http://github.com/carrascoMDD/ng6wk01",
+    "bugs": {
+        "url": "http://github.com/carrascoMDD/ng6wk01/issues"
+    },
+    "license": "EUPL-1.1",
+    "author": {
+        "name": "Antonio Carrasco Valero",
+        "email": "carrascomdd@gmail.com"
+    },
+    "files": [],
+    "main": null,
+    "bin": {},
+    "man": null,
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/carrascoMDD/ng6wk01.git"
+    },
+    "scripts": {},
+    "config": {},
+    "dependencies": {},
+    "devDependencies": {
+        "@angular/cli": "^6.0.8"
+    },
+    "maintainers": [
+        {
+            "name": "Antonio Carrasco Valero",
+            "email": "carrascomdd@gmail.com"
+        }
+    ]
+}
