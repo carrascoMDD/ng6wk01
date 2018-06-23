@@ -1,12 +1,14 @@
 import { NgModule }      from '@angular/core';
 
 import {
+    MatDialogModule,
     MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
     MatListModule,
     MatInputModule,
     MatButtonModule,
+    MatSelectModule,
     MatCardModule,
     MatTableModule
 } from '@angular/material';
@@ -17,22 +19,26 @@ import 'hammerjs';
 @NgModule(
     {
         imports: [
-            MatToolbarModule,
+            MatDialogModule,
             MatSidenavModule,
+            MatToolbarModule,
             MatIconModule,
             MatListModule,
             MatInputModule,
             MatButtonModule,
+            MatSelectModule,
             MatCardModule,
             MatTableModule
         ],
         exports: [
-            MatToolbarModule,
+            MatDialogModule,
             MatSidenavModule,
+            MatToolbarModule,
             MatIconModule,
             MatListModule,
             MatInputModule,
             MatButtonModule,
+            MatSelectModule,
             MatCardModule,
             MatTableModule
         ]
