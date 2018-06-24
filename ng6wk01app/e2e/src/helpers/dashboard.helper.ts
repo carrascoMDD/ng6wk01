@@ -1,4 +1,5 @@
-import { browser, by, element } from 'protractor';
+import { protractor, browser, by, element, WebElement } from 'protractor';
+import { WebElementPromise }    from "selenium-webdriver";
 
 import { Dashboard }            from "../pageobjects/dashboard.po";
 import { RowIndexFinderHelper } from "./rowindexfinder.helper";
@@ -73,13 +74,15 @@ export class DashboardHelper {
     }
 
 
+
+
     mustExistPostWithPostfix( thePostfix: string) {
         return new Promise<void>( (theResolve, theReject) => {
             if( LOG) {
-                console.log( "DashboardHelper.mustExistPostWithPostfix - about to findPostsTableRowWithTitle()");
+                console.log( "DashboardHelper.mustExistPostWithPostfix - about to findPostsTableRowIndexWithPostfix( " + thePostfix + ")");
             }
 
-            this.findPostsTableRowWithTitle( "Post Title " + thePostfix)
+            this.findPostsTableRowIndexWithPostfix( thePostfix)
                 .then(
                     ( theRowIndex) => {
                         if( LOG) {
@@ -94,7 +97,7 @@ export class DashboardHelper {
                     },
                     ( theError) => {
                         if( LOG) {
-                            console.log( "DashboardHelper.mustExistPostWithPostfix - ERROR on findPostsTableRowWithTitle()");
+                            console.log( "DashboardHelper.mustExistPostWithPostfix - ERROR on findPostsTableRowIndexWithTitle()");
                         }
                         theReject( theError);
                     }
@@ -104,10 +107,18 @@ export class DashboardHelper {
 
 
 
+    findPostsTableRowIndexWithPostfix( thePostfix: string): Promise<number> {
+        const aTitle = "Post Title " + thePostfix;
+        if( LOG) {
+            console.log( "DashboardHelper.mustExistPostWithPostfix - about to findPostsTableRowIndexWithTitle( " + aTitle + ")");
+        }
+
+        return this.findPostsTableRowIndexWithTitle( aTitle);
+    }
 
 
 
-    findPostsTableRowWithTitle( theTitle: string) {
+    findPostsTableRowIndexWithTitle( theTitle: string): Promise<number> {
         return new Promise( ( theResolve, theReject) => {
             if( !theTitle) {
                 theReject( "!theTitle");
@@ -136,6 +147,144 @@ export class DashboardHelper {
                     }
                 );
         });
+    }
+
+
+
+
+    clickDeleteOnRowIndex_ExpectDialog( theRowIndex: number, theDialogMessage: string) {
+
+        return new Promise( ( theResolve, theReject) => {
+
+            let anErrorHasBeenLogged = false;
+
+            if( LOG) {
+                console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog about to this.clickDeleteOnRowIndex( " + theRowIndex + ")");
+            }
+
+            this.clickDeleteOnRowIndex( theRowIndex)
+                .then(
+                    () =>  {
+                        const anAlertDialog = protractor.browser.switchTo().alert();
+                        expect( !( typeof anAlertDialog == "undefined") && !( anAlertDialog == null)).toBe( true);
+
+                        if( !anAlertDialog) {
+                            throw "ERROR alert expected and no alert shown";
+                        }
+
+                        if( LOG) {
+                            console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog about to anAlertDialog.accept()");
+                        }
+                        anAlertDialog.accept();  // Use to accept (simulate clicking ok)
+                        // alertDialog.dismiss();
+                    },
+                    ( theError) => {
+                        if( LOG && !anErrorHasBeenLogged) {
+                            anErrorHasBeenLogged = true;
+                            console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog about to this.clickDeleteOnRowIndex( " + theRowIndex + ")");
+                        }
+                        throw theError;
+                    }
+                )
+                .then(
+                    () =>  {
+                        theResolve();
+                    },
+                    ( theError) => {
+                        if( LOG && !anErrorHasBeenLogged) {
+                            anErrorHasBeenLogged = true;
+                            console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog ERROR on anAlertDialog.accept() " + theError);
+                        }
+                        theReject( theError);
+                    }
+                );
+        });
+    }
+
+
+
+
+    clickDeleteOnRowIndex( theRowIndex: number) {
+
+        return new Promise( ( theResolve, theReject) => {
+
+            let anErrorHasBeenLogged = false;
+
+            if( LOG) {
+                console.log( "DashboardHelper.clickDeleteOnRowIndex about to findDeleteOnRowIndexAnchor()");
+            }
+
+            this.findDeleteOnRowIndexAnchor( theRowIndex)
+                .then(
+                    ( theAnchor: WebElement): Promise<void> =>  {
+                        if( LOG) {
+                            console.log( "DashboardHelper.clickDeleteOnRowIndex about to theAnchor.click()");
+                        }
+
+                        return new Promise( ( otherResolve, otherReject) => {
+                            theAnchor.click().then( ( ) => { otherResolve();}, (theError)=>{ otherReject( theError);});
+                        });
+                    },
+                    ( theError) => {
+                        if( LOG && !anErrorHasBeenLogged) {
+                            anErrorHasBeenLogged = true;
+                            console.log( "DashboardHelper.clickDeleteOnRowIndex ERROR on findDeleteOnRowIndexAnchor() " + theError);
+                        }
+                        throw theError;
+                    }
+                )
+                .then(
+                    ( theAnchor) =>  {
+                        if( LOG) {
+                            console.log( "DashboardHelper.clickDeleteOnRowIndex - OK");
+                        }
+                        theResolve();
+                    },
+                    ( theError) => {
+                        if( LOG && !anErrorHasBeenLogged) {
+                            anErrorHasBeenLogged = true;
+                            console.log( "DashboardHelper.clickDeleteOnRowIndex ERROR on theAnchor.click() " + theError);
+                        }
+
+                        theReject( theError);
+                    }
+                );
+        });
+    }
+
+
+
+
+    findDeleteOnRowIndexAnchor( theRowIndex: number): Promise<WebElement> {
+
+        return new Promise( ( theResolve, theReject) => {
+
+            if( !( typeof theRowIndex == "number")) {
+                theReject( "theRowIndex not a number");
+                return;
+            }
+
+            if( theRowIndex < 0){
+                theReject( "theRowIndex < 0");
+                return;
+            }
+
+
+            const aDeleteAnchorDomId = "domid_post_delete_" + theRowIndex;
+
+            if( LOG) {
+                console.log( "DashboardHelper.findDeleteOnRowIndexAnchor - just findElement #" + aDeleteAnchorDomId);
+            }
+            browser.driver.findElement( by.id( aDeleteAnchorDomId))
+                .then(
+                    ( theAnchor: WebElement) => {
+                        theResolve( theAnchor);
+                    },
+                    ( theError) => {
+                        theReject( theError);
+                    }
+               );
+        })
     }
 
 

@@ -240,7 +240,7 @@ export class LoginHelper {
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {
                             anErrorHasBeenLogged = true;
-                            console.log( "LoginHelper.doLogin - ERROR on sleep( 2000) " + theError);
+                            console.log( "LoginHelper.doLogin - ERROR on sleep( 3000) " + theError);
                         }
                         browser.waitForAngularEnabled( true);
 

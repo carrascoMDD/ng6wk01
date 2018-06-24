@@ -66,7 +66,7 @@ export class PostHelper {
                 .then(
                     () => {
                         if( LOG) {
-                            console.log( "LoginHelper.fillAndCreatePost - about to postDialog.getCategoryExists().click()");
+                            console.log( "LoginHelper.fillAndCreatePost - about to postDialog.getCategory().click()");
                         }
 
                         return postDialog.getCategory().click();
@@ -83,7 +83,7 @@ export class PostHelper {
                 .then(
                     () => {
                         if( LOG) {
-                            console.log( "LoginHelper.fillAndCreatePost - postDialog.getCategoryOption( 'Web-Development').click()");
+                            console.log( "LoginHelper.fillAndCreatePost - postDialog.getCategoryOption( 1).click()");
                         }
 
                         return postDialog.getCategoryOption( 1).click();
@@ -91,7 +91,7 @@ export class PostHelper {
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {
                             anErrorHasBeenLogged = true;
-                            console.log( "LoginHelper.fillAndCreatePost - ERROR on postDialog.getCategoryExists().click()");
+                            console.log( "LoginHelper.fillAndCreatePost - ERROR on postDialog.getCategory().click()");
                         }
 
                         throw theError;
@@ -107,7 +107,7 @@ export class PostHelper {
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {
                             anErrorHasBeenLogged = true;
-                            console.log( "LoginHelper.doLogin - ERROR on browser.sleep( 3000) " + theError);
+                            console.log( "LoginHelper.doLogin - ERROR on postDialog.getCategoryOption( 1).click() " + theError);
                         }
 
                         throw theError;

@@ -18,7 +18,7 @@ const SAMPLECRITERIA = {
 export class RowIndexFinderHelper {
 
 
-    callBrowser_RowIndexFinder( theCriteria: Object) {
+    callBrowser_RowIndexFinder( theCriteria: Object):Promise<number> {
 
         return new Promise<number>( ( theResolve, theReject) => {
 
