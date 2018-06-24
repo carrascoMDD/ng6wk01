@@ -1,7 +1,9 @@
 import { protractor, browser, by, element, WebElement } from 'protractor';
-import { WebElementPromise }    from "selenium-webdriver";
+import { WebElementPromise }                            from "selenium-webdriver";
+import { ConfirmDialog }                                from "../pageobjects/confirm-dialog.po";
 
 import { Dashboard }            from "../pageobjects/dashboard.po";
+import { MustloginAlert }       from "../pageobjects/mustlogin-alert.po";
 import { RowIndexFinderHelper } from "./rowindexfinder.helper";
 
 const LOG = true;
@@ -10,6 +12,7 @@ export class DashboardHelper {
 
     dashboard = new Dashboard();
     rowIndexFinderHelper = new RowIndexFinderHelper();
+    mustLoginAlert = new MustloginAlert();
 
     hasAddPostButton() {
         return new Promise( ( theResolve, theReject) => {
@@ -152,54 +155,42 @@ export class DashboardHelper {
 
 
 
-    clickDeleteOnRowIndex_ExpectDialog( theRowIndex: number, theDialogMessage: string) {
+    clickDeleteOnRowIndex_Confirm( theRowIndex: number, theDialogMessage: string, theConfirm: boolean) {
 
         return new Promise( ( theResolve, theReject) => {
 
             let anErrorHasBeenLogged = false;
 
             if( LOG) {
-                console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog about to this.clickDeleteOnRowIndex( " + theRowIndex + ")");
+                console.log( "DashboardHelper.clickDeleteOnRowIndex_Confirm about to this.clickDeleteOnRowIndex( " + theRowIndex + ")");
             }
 
             this.clickDeleteOnRowIndex( theRowIndex)
                 .then(
                     () =>  {
-                        const anAlertDialog = protractor.browser.switchTo().alert();
-                        expect( !( typeof anAlertDialog == "undefined") && !( anAlertDialog == null)).toBe( true);
-
-                        if( !anAlertDialog) {
-                            throw "ERROR alert expected and no alert shown";
-                        }
-
-                        if( LOG) {
-                            console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog about to anAlertDialog.accept()");
-                        }
-
-                        return new Promise( ( theResolve, theReject) => {
-                            anAlertDialog.accept()  // Use to accept (simulate clicking ok)
+                        return new Promise( ( otherResolve, otherReject) => {
+                            let aPromise = null;
+                            if( theConfirm) {
+                                aPromise = this.mustLoginAlert.getOkButton().click();
+                            }
+                            else {
+                                aPromise = this.mustLoginAlert.getCancelButton().click();
+                            }
+                            aPromise
                                 .then(
                                     () => {
-                                        if( LOG) {
-                                            console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog  - OK anAlertDialog.accept()");
-                                        }
-                                        theResolve();
+                                        otherResolve();
                                     },
                                     ( theError) => {
-                                        if( LOG) {
-                                            console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog  - ERROR on anAlertDialog.accept() " + theError);
-                                        }
-                                        theReject( theError);
+                                        otherReject( theError);
                                     }
-                                );
+                                )
                         });
-                        // alertDialog.dismiss();
-
                     },
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {
                             anErrorHasBeenLogged = true;
-                            console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog about to this.clickDeleteOnRowIndex( " + theRowIndex + ")");
+                            console.log( "DashboardHelper.clickDeleteOnRowIndex_Confirm about to this.clickDeleteOnRowIndex( " + theRowIndex + ")");
                         }
                         throw theError;
                     }
@@ -211,7 +202,7 @@ export class DashboardHelper {
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {
                             anErrorHasBeenLogged = true;
-                            console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog ERROR on anAlertDialog.accept() " + theError);
+                            console.log( "DashboardHelper.clickDeleteOnRowIndex_Confirm ERROR on anAlertDialog.accept() " + theError);
                         }
                         theReject( theError);
                     }

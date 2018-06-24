@@ -102,10 +102,10 @@ describe( 'ng6wk01 delete Post', () => {
                     }
 
                     if( LOG) {
-                        console.log( "should not delete when logged out - about to dashboardHelper.clickDeleteOnRowIndex_ExpectDialog( " + theRowIndex + ", 'Login in Before')");
+                        console.log( "should not delete when logged out - about to dashboardHelper.clickDeleteOnRowIndex_Confirm( " + theRowIndex + ", 'Login in Before')");
                     }
 
-                    return dashboardHelper.clickDeleteOnRowIndex_ExpectDialog( theRowIndex, "Login in Before");
+                    return dashboardHelper.clickDeleteOnRowIndex_Confirm( theRowIndex, "Login in Before", false /* theConfirm */);
                 },
                 ( theError) => {
                     if( LOG && !anErrorHasBeenLogged) {
@@ -126,7 +126,7 @@ describe( 'ng6wk01 delete Post', () => {
                 ( theError) => {
                     if( LOG && !anErrorHasBeenLogged) {
                         anErrorHasBeenLogged = true;
-                        console.log( "should not delete when logged out - ERROR on dashboardHelper.clickDeleteOnRowIndex_ExpectDialog( " + aRowIndex + ", 'Login in Before')");
+                        console.log( "should not delete when logged out - ERROR on dashboardHelper.clickDeleteOnRowIndex_Confirm( " + aRowIndex + ", 'Login in Before')");
                     }
                     throw theError;
                 }
@@ -254,10 +254,10 @@ describe( 'ng6wk01 delete Post', () => {
                     }
 
                     if( LOG) {
-                        console.log( "should delete when logged in - about to dashboardHelper.clickDeleteOnRowIndex_ExpectDialog( " + theRowIndex + ", 'Login in Before')");
+                        console.log( "should delete when logged in - about to dashboardHelper.clickDeleteOnRowIndex_Confirm( " + theRowIndex + ", 'Login in Before')");
                     }
 
-                    return dashboardHelper.clickDeleteOnRowIndex_ExpectDialog( theRowIndex, "Login in Before");
+                    return dashboardHelper.clickDeleteOnRowIndex_Confirm( theRowIndex, "Login in Before", true /* theConfirm */);
                 },
                 ( theError) => {
                     if( LOG && !anErrorHasBeenLogged) {
@@ -278,7 +278,7 @@ describe( 'ng6wk01 delete Post', () => {
                 ( theError) => {
                     if( LOG && !anErrorHasBeenLogged) {
                         anErrorHasBeenLogged = true;
-                        console.log( "should delete when logged in - ERROR on dashboardHelper.clickDeleteOnRowIndex_ExpectDialog( " + aRowIndex + ", 'Login in Before')");
+                        console.log( "should delete when logged in - ERROR on dashboardHelper.clickDeleteOnRowIndex_Confirm( " + aRowIndex + ", 'Login in Before')");
                     }
                     throw theError;
                 }
