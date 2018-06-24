@@ -1,4 +1,4 @@
-import { AppPage } from './app.po';
+import { AppPage } from './pageobjects/app.po';
 
 
 describe( 'ng6wk01 App', () => {

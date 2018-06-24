@@ -1,7 +1,7 @@
 import { browser} from 'protractor';
 
-import { Sidenav }    from './sidenav.po';
-import { LoginAuth0 } from "./loginauth0.po";
+import { Sidenav }    from '../pageobjects/sidenav.po';
+import { LoginAuth0 } from "../pageobjects/loginauth0.po";
 
 const LOG = true;
 
@@ -20,7 +20,7 @@ export class LoginHelper {
             if( LOG) {
                 console.log( "LoginHelper.doLogoutIfLoggedIn - about to findElements getToolbarLinkLogoutExists");
             }
-            browser.driver.findElements( sidenav.getToolbarLinkLogoutExists())
+            this.isLoggedIn()
                 .then(
                     ( theElements) =>  {
                         if( LOG) {
@@ -106,20 +106,26 @@ export class LoginHelper {
     isLoggedIn() {
 
         let sidenav = new Sidenav();
-        if( LOG) {
-            console.log( "LoginHelper.isLoggedIn - about to navigateTo()");
-        }
-
-        sidenav.navigateTo();
 
         if( LOG) {
             console.log( "LoginHelper.isLoggedIn - about to findElements getToolbarLinkLoginExists()");
         }
 
-        return browser.driver.findElements( sidenav.getToolbarLinkLoginExists());
+        return browser.driver.findElements( sidenav.getToolbarLinkLogoutExists());
     }
 
 
+
+    assertIsLoggedIn() {
+
+        let sidenav = new Sidenav();
+
+        if( LOG) {
+            console.log( "LoginHelper.isLoggedIn - about to findElements getToolbarLinkLoginExists()");
+        }
+
+        return browser.driver.findElement( sidenav.getToolbarLinkLogoutExists());
+    }
 
 
 
@@ -225,11 +231,11 @@ export class LoginHelper {
                 .then(
                     () => {
                         if( LOG && !anErrorHasBeenLogged) {
-                            console.log( "LoginHelper.doLogin - about to findElement sidenav.getToolbarLinkLogoutExists()");
+                            console.log( "LoginHelper.doLogin - about to this.assertIsLoggedIn()");
                         }
                         browser.waitForAngularEnabled( true);
 
-                        return browser.driver.findElement( sidenav.getToolbarLinkLogoutExists());
+                        return this.assertIsLoggedIn();
                     },
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {
@@ -432,6 +438,74 @@ export class LoginHelper {
 
         });
     }
+
+
+
+
+
+
+    doLoginIfNeeded() {
+
+        return new Promise( ( theResolve, theReject) => {
+
+            let anErrorHasBeenLogged = false;
+            let aWasLoggedIn = false;
+
+            if( LOG) {
+                console.log( "LoginHelper.doLoginIfNeeded - about to this.isLoggedIn()");
+            }
+
+            this.isLoggedIn()
+                .then(
+                    ( theElements) => {
+
+                        if( theElements && theElements.length) {
+                            if( LOG) {
+                                console.log( "LoginHelper.doLoginIfNeeded - aWasLoggedIn = true");
+                            }
+
+                            aWasLoggedIn = true;
+                        }
+                        else {
+                            if( LOG) {
+                                console.log( "LoginHelper.doLoginIfNeeded - about to  this.doLogin()");
+                            }
+
+                            return this.doLogin();
+                        }
+                    },
+                    ( theError) => {
+                        if( LOG && !anErrorHasBeenLogged) {
+                            anErrorHasBeenLogged = true;
+                            console.log( "LoginHelper.doLoginIfNeeded - ERROR on this.isLoggedIn() " + theError);
+                        }
+
+                        throw theError;
+                    }
+                )
+                .then(
+                    () => {
+                        if( LOG) {
+                            console.log( "LoginHelper.doLoginIfNeeded - OK aWasLoggedIn=" + aWasLoggedIn);
+                        }
+
+                        theResolve( aWasLoggedIn);
+                    },
+                    ( theError) => {
+                        if( LOG && !anErrorHasBeenLogged) {
+                            anErrorHasBeenLogged = true;
+                            console.log( "LoginHelper.doLoginIfNeeded ERROR " + theError);
+                        }
+
+                        theReject( theError);
+                    }
+                );
+        });
+
+
+
+    }
+
 
 
 

@@ -1,5 +1,5 @@
-import { Sidenav } from './sidenav.po';
-import { LoginHelper} from './login.helper'
+import { Sidenav }    from './pageobjects/sidenav.po';
+import { LoginHelper} from './helpers/login.helper'
 
 const LOG = true;
 
@@ -12,7 +12,7 @@ describe( 'ng6wk01 Sidenav logged in', () => {
         loginHelper = new LoginHelper();
     } );
 
-    it( 'should logged in user items', (done) => {
+    it( 'should logged in user toolbar items', (done) => {
 
         if( LOG) {
             console.log( "should logged in user items - about to navigateTo()");
@@ -23,33 +23,23 @@ describe( 'ng6wk01 Sidenav logged in', () => {
             console.log( "should logged in user items - about to doLogoutIfLoggedIn()");
         }
 
-        loginHelper.doLogoutIfLoggedIn()
+        loginHelper.doLoginIfNeeded()
             .then(
                 ()=> {
                     if( LOG) {
-                        console.log( "should logged in user items - about to doLogin()");
+                        console.log( "should logged in user toolbar items - done doLoginIfNeeded()");
                     }
 
-                    return loginHelper.doLogin();
-                },
-                ( theError) => {
-                    throw theError;
-                }
-            )
-            .then(
-                ()=> {
                     expect( sidenav.getToolbarBlogLink().getText() ).toEqual( "Material Blog" );
                     expect( sidenav.getToolbarLinkHome().getText()).toEqual( "homeHome" );
                     expect( sidenav.getToolbarLinkDashboard().getText()).toEqual( "dashboardDashboard" );
                     expect( sidenav.getToolbarLinkLogout().getText()).toEqual( "inputLogOut" );
-                    if( LOG) {
-                        console.log( "should logged in user items - done doLogin()");
-                    }
+
                     done();
                 },
                 ( theError) => {
                     if( LOG) {
-                        console.log( "should logged in user items - ERROR " + theError);
+                        console.log( "should logged in user items - ERROR on doLoginIfNeeded " + theError);
                     }
                     done.fail( theError);
                 });

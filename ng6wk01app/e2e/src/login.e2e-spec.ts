@@ -1,8 +1,8 @@
 import { browser, element, by, By, $, $$, ExpectedConditions} from 'protractor';
 
-import { Sidenav }    from './sidenav.po';
-import { LoginAuth0 } from "./loginauth0.po";
-import { LoginHelper} from './login.helper'
+import { Sidenav }    from './pageobjects/sidenav.po';
+import { LoginAuth0 } from "./pageobjects/loginauth0.po";
+import { LoginHelper} from './helpers/login.helper'
 
 const LOG = true;
 

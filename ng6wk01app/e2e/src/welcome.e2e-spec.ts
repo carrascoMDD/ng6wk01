@@ -1,4 +1,4 @@
-import { WelcomePage } from './welcome.po';
+import { WelcomePage } from './pageobjects/welcome.po';
 
 
 describe( 'ng6wk01 Welcome', () => {
