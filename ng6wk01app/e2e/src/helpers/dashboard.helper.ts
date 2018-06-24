@@ -175,8 +175,26 @@ export class DashboardHelper {
                         if( LOG) {
                             console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog about to anAlertDialog.accept()");
                         }
-                        anAlertDialog.accept();  // Use to accept (simulate clicking ok)
+
+                        return new Promise( ( theResolve, theReject) => {
+                            anAlertDialog.accept()  // Use to accept (simulate clicking ok)
+                                .then(
+                                    () => {
+                                        if( LOG) {
+                                            console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog  - OK anAlertDialog.accept()");
+                                        }
+                                        theResolve();
+                                    },
+                                    ( theError) => {
+                                        if( LOG) {
+                                            console.log( "DashboardHelper.clickDeleteOnRowIndex_ExpectDialog  - ERROR on anAlertDialog.accept() " + theError);
+                                        }
+                                        theReject( theError);
+                                    }
+                                );
+                        });
                         // alertDialog.dismiss();
+
                     },
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {

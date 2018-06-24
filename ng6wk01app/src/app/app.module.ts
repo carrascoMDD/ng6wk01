@@ -18,8 +18,8 @@ import { AppRouters }     from './app.routes';
 import { PostService }         from './data/post.service';
 import { AuthService }         from './auth.service';
 import { PostDialogComponent } from './post-dialog/post-dialog.component';
-
-
+import { MustloginAlertComponent } from './mustlogin-alert/mustlogin-alert.component';
+import { ConfirmDialogComponent }  from "./confirm-dialog/confirm-dialog.component";
 
 
 
@@ -31,7 +31,9 @@ import { PostDialogComponent } from './post-dialog/post-dialog.component';
             Form01Component,
             WelcomeComponent,
             DashboardComponent,
-            PostDialogComponent
+            PostDialogComponent,
+            MustloginAlertComponent,
+            ConfirmDialogComponent
         ],
         imports:         [
             BrowserModule,
@@ -45,7 +47,9 @@ import { PostDialogComponent } from './post-dialog/post-dialog.component';
         providers:       [ PostService, AuthService ],
         bootstrap:       [ AppComponent ],
         entryComponents: [
-            PostDialogComponent
+            PostDialogComponent,
+            MustloginAlertComponent,
+            ConfirmDialogComponent
         ]
     } )
 export class AppModule {}

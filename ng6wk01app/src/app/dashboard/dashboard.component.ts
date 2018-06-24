@@ -4,9 +4,16 @@ import { Post }        from '../post';
 import { DataSource }  from '@angular/cdk/table';
 import { Observable }  from 'rxjs/Observable';
 import { AuthService } from '../auth.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog }   from '@angular/material';
 
-import {PostDialogComponent} from '../post-dialog/post-dialog.component';
+import { PostDialogComponent }     from '../post-dialog/post-dialog.component';
+import { MustloginAlertComponent } from '../mustlogin-alert/mustlogin-alert.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+
+
+const LOG = true;
+
+
 
 
 
@@ -16,7 +23,8 @@ import {PostDialogComponent} from '../post-dialog/post-dialog.component';
         selector:    'app-dashboard',
         templateUrl: './dashboard.component.html',
         styleUrls:   [ './dashboard.component.css' ]
-    } )
+    }
+)
 export class DashboardComponent {
     constructor( private dataService: PostService, public auth: AuthService, public dialog: MatDialog ) {
     }
@@ -31,25 +39,128 @@ export class DashboardComponent {
 
 
     deletePost( id ) {
-        if( this.auth.isAuthenticated() ) {
-            this.dataService.deletePost( id );
-            this.dataSource = new PostDataSource( this.dataService );
-        }
-        else {
-            alert( 'Login in Before' );
-        }
+        return new Promise( ( theResolve, theReject) => {
+            if( this.auth.isAuthenticated() ) {
+                this.openConfirmDeleteAlert( "Do you really want to delete post ?")
+                    .then(
+                        ( theOK) => {
+                            return  this.dataService.deletePost( id );
+                        },
+                        ( theError) => {
+                            throw theError;
+                        }
+                    )
+                    .then(
+                        () => {
+                            theResolve();
+                        },
+                        ( theError) => {
+                            theReject( theError);
+                        }
+                    );
+            }
+            else {
+                this.openMustLoginAlert("Login Before deleting posts" )
+                    .then(
+                        () => {
+                            theResolve();
+                        },
+                        ( theError) => {
+                            theReject( theError);
+                        }
+                    );
+            }
+
+        });
+
+
     }
 
-    openDialog(): void {
-        let dialogRef = this.dialog.open(PostDialogComponent, {
+
+
+
+    openMustLoginAlert( theMessage: string ): Promise<void> {
+        if( LOG ) {
+            console.log( "DashboardComponent.openMustLoginAlert() BEGIN" );
+        }
+        let dialogRef = this.dialog.open( MustloginAlertComponent, {
             width: '600px',
-            data: 'Add Post'
-        });
-        dialogRef.componentInstance.event.subscribe((result) => {
-            this.dataService.addPost(result.data);
-            this.dataSource = new PostDataSource(this.dataService);
-        });
+            data:  theMessage
+        } );
+
+        return new Promise( ( theResolve, theReject ) => {
+            dialogRef.componentInstance.event.subscribe(
+                ( theOK ) => {
+                    if( LOG ) {
+                        console.log( "DashboardComponent.openMustLoginAlert() OK" );
+                    }
+
+                    if( theOK) {
+                        this.auth.login();
+                    }
+
+                    theResolve();
+                },
+                ( theError ) => {
+                    if( LOG ) {
+                        console.log( "DashboardComponent.openMustLoginAlert() ERROR " + theError );
+                    }
+
+                    theReject( theError );
+                } );
+        } );
     }
+
+
+
+    openConfirmDeleteAlert( theMessage: string ): Promise<void> {
+        if( LOG ) {
+            console.log( "DashboardComponent.openConfirmDeleteAlert() BEGIN" );
+        }
+        let dialogRef = this.dialog.open( ConfirmDialogComponent, {
+            width: '600px',
+            data:  theMessage
+        } );
+
+        return new Promise( ( theResolve, theReject ) => {
+            dialogRef.componentInstance.event.subscribe(
+                ( theOK ) => {
+                    if( LOG ) {
+                        console.log( "DashboardComponent.openConfirmDeleteAlert() OK" );
+                    }
+
+                    if( theOK) {
+                        theResolve();
+                    }
+                    else {
+                        theReject();
+                    }
+                },
+                ( theError ) => {
+                    if( LOG ) {
+                        console.log( "DashboardComponent.openConfirmDeleteAlert() ERROR " + theError );
+                    }
+
+                    theReject( theError );
+                } );
+        } );
+    }
+
+
+
+
+    openAddPostDialog(): void {
+        let dialogRef = this.dialog.open( PostDialogComponent, {
+            width: '600px',
+            data:  'Add Post'
+        } );
+        dialogRef.componentInstance.event.subscribe( ( result ) => {
+            this.dataService.addPost( result.data );
+            // this.dataSource = new PostDataSource(this.dataService);
+        } );
+    }
+
+
 }
 
 
