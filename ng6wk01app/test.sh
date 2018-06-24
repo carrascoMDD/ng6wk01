@@ -10,5 +10,5 @@
 echo "ng6wk01 test.sh"
 date
 
-./node_modules/.bin/ng test
+./node_modules/.bin/ng test --watch false
 

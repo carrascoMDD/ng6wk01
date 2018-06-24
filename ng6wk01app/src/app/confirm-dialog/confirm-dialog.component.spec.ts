@@ -24,7 +24,7 @@ import { WelcomeComponent }        from "../welcome/welcome.component";
 
 import { APP_BASE_HREF } from '@angular/common';
 
-import { MustloginAlertComponent } from './mustlogin-alert.component';
+import { ConfirmDialogComponent } from './confirm-dialog.component';
 
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialog,  MatDialogRef} from "@angular/material/dialog";
 
@@ -37,8 +37,8 @@ const routes: Routes = [
 
 
 describe('PostDialogComponent', () => {
-  let component: MustloginAlertComponent;
-  let fixture: ComponentFixture<MustloginAlertComponent>;
+  let component: ConfirmDialogComponent;
+  let fixture: ComponentFixture<ConfirmDialogComponent>;
 
 
     beforeEach( async( () => {
@@ -61,7 +61,7 @@ describe('PostDialogComponent', () => {
                     RouterModule.forRoot( routes )
                 ],
                 declarations: [
-                    MustloginAlertComponent,
+                    ConfirmDialogComponent,
                     WelcomeComponent,
                     DashboardComponent
                 ],
@@ -76,13 +76,13 @@ describe('PostDialogComponent', () => {
 
     beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MustloginAlertComponent ]
+      declarations: [ ConfirmDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent( MustloginAlertComponent);
+    fixture = TestBed.createComponent( ConfirmDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
