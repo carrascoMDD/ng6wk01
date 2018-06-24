@@ -12,6 +12,35 @@ describe( 'ng6wk01 Sidenav logged in', () => {
         loginHelper = new LoginHelper();
     } );
 
+
+    it( 'should display sidenav items for logged out users', (done) => {
+        sidenav.navigateTo();
+
+        loginHelper.doLogoutIfLoggedIn()
+            .then(
+                ()=> {
+                    if( LOG) {
+                        console.log( "should logged out user toolbar items - done doLogoutIfLoggedIn()");
+                    }
+
+                    expect( sidenav.getToolbarBlogLink().getText() ).toEqual( "Material Blog" );
+                    expect( sidenav.getToolbarLinkLogin().getText() ).toEqual( "inputLogin" );
+                    expect( sidenav.getToolbarLinkDashboard().getText() ).toEqual( "dashboardDashboard" );
+
+                    done();
+                },
+                ( theError) => {
+                    if( LOG) {
+                        console.log( "should logged out user toolbar items - ERROR on doLogoutIfLoggedIn()");
+                    }
+
+                    done.fail( theError);
+                });
+
+    } );
+
+
+    
     it( 'should logged in user toolbar items', (done) => {
 
         if( LOG) {

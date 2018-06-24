@@ -28,47 +28,17 @@ export class Dashboard {
     }
 
 
-    hasAddPostButton() {
-        return new Promise( ( theResolve, theReject) => {
+    getPostsTablesExists() {
+        return by.id( 'domid_posts_table' );
+    }
 
-            browser.driver.findElements( this.getAddPostButtonExists())
-                .then(
-                    ( thePostButtons)=> {
-
-                        theResolve( thePostButtons && thePostButtons.length ? true : false);
-                    },
-                    ( theError) => {
-                        theReject( theError);
-                    });
-        })
+    getPostsTables() {
+        return element( this.getPostsTablesExists());
     }
 
 
-    findAddPostButtons() {
-        return new Promise( ( theResolve, theReject) => {
-            theResolve( browser.driver.findElements( this.getAddPostButtonExists()));
-        })
-    }
-
-    findAddPostButton() {
-        return new Promise( ( theResolve, theReject) => {
-            theResolve( browser.driver.findElement( this.getAddPostButtonExists()));
-        })
-    }
-
-
-    clickPostButton() {
-        return new Promise( ( theResolve, theReject) => {
-            this.getAddPostButton().click()
-                .then(
-                    () => {
-                        theResolve();
-                    },
-                    ( theError) => {
-                        theReject( theError);
-                    }
-                );
-        });
+    getPostsTableRowsExists() {
+        return by.css( '#domid_posts_table mat-row' );
     }
 
 

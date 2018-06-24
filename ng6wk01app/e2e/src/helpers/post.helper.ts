@@ -9,20 +9,38 @@ export class PostHelper {
 
 
 
+    newPostPostfix(): string {
+
+        const aNow = new Date();
+        let aPostfix =  aNow.getFullYear() + "/" +
+                    aNow.getMonth() +  "/" +
+                    aNow.getDate() +  "-" +
+                    aNow.getHours() +  ":" +
+                    aNow.getMinutes() +  ":" +
+                    aNow.getSeconds() + "." +
+                    aNow.getMilliseconds();
+
+        return aPostfix;
+    }
+
+
+
+
+    mustExistPostWithPostfix( thePostfix: string) {
+
+    }
+
+
+
+
 
     fillAndCreatePost( thePostfix?: string): Promise<void> {
 
         let aPostfix = thePostfix;
         if( !aPostfix) {
-            const aNow = new Date();
-            aPostfix =  aNow.getFullYear() + "/" +
-                        aNow.getMonth() +  "/" +
-                        aNow.getDate() +  "-" +
-                        aNow.getHours() +  ":" +
-                        aNow.getMinutes() +  ":" +
-                        aNow.getSeconds() + "." +
-                        aNow.getMilliseconds();
+            aPostfix =  this.newPostPostfix();
         }
+
         let postDialog = new PostDialog();
 
         let anErrorHasBeenLogged = false;
