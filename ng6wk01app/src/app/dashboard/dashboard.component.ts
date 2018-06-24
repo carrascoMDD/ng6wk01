@@ -1,14 +1,15 @@
-import { Component }   from '@angular/core';
-import { PostService } from '../data/post.service';
-import { Post }        from '../post';
-import { DataSource }  from '@angular/cdk/table';
-import { Observable }  from 'rxjs/Observable';
-import { AuthService } from '../auth.service';
-import { MatDialog }   from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { PostService }       from '../data/post.service';
+import { Post }              from '../post';
+import { DataSource }        from '@angular/cdk/table';
+import { Observable }        from 'rxjs/Observable';
+import { AuthService }       from '../auth.service';
+import { MatDialog }         from '@angular/material';
 
 import { PostDialogComponent }     from '../post-dialog/post-dialog.component';
 import { MustloginAlertComponent } from '../mustlogin-alert/mustlogin-alert.component';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent }  from '../confirm-dialog/confirm-dialog.component';
+import { SidenavService }          from "../sidenav/sidenav-svce";
 
 
 const LOG = true;
@@ -25,11 +26,19 @@ const LOG = true;
         styleUrls:   [ './dashboard.component.css' ]
     }
 )
-export class DashboardComponent {
-    constructor( private dataService: PostService, public auth: AuthService, public dialog: MatDialog ) {
+export class DashboardComponent implements OnInit {
+
+    constructor(
+        private sidenavService: SidenavService,
+        private dataService: PostService,
+        public auth: AuthService,
+        public dialog: MatDialog ) {
     }
 
 
+    ngOnInit() {
+        this.sidenavService.close();
+    }
 
 
     displayedColumns = [ 'date_posted', 'title', 'category', 'delete' ];

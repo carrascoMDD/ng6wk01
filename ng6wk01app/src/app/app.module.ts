@@ -9,6 +9,7 @@ import { FormsModule }             from '@angular/forms';
 
 import 'hammerjs';
 import { Form01Component }         from './form01/form01.component';
+import { SidenavService }          from "./sidenav/sidenav-svce";
 import { WelcomeComponent }        from './welcome/welcome.component';
 import { DashboardComponent }      from './dashboard/dashboard.component';
 
@@ -44,7 +45,7 @@ import { ConfirmDialogComponent }  from "./confirm-dialog/confirm-dialog.compone
             FormsModule,
             AppRouters
         ],
-        providers:       [ PostService, AuthService ],
+        providers:       [ PostService, AuthService, SidenavService ],
         bootstrap:       [ AppComponent ],
         entryComponents: [
             PostDialogComponent,
