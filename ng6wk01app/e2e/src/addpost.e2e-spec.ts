@@ -137,7 +137,7 @@ describe( 'ng6wk01 add Post', () => {
                         console.log( "should add when logged in - about to postHelper.mustExistPostWithPostfix()");
                     }
 
-                    return postHelper.mustExistPostWithPostfix( aPostfix);
+                    return dashboardHelper.mustExistPostWithPostfix( aPostfix);
                 },
                 ( theError) => {
                     if( LOG && !anErrorHasBeenLogged) {
@@ -158,7 +158,7 @@ describe( 'ng6wk01 add Post', () => {
                 ( theError) => {
                     if( LOG && !anErrorHasBeenLogged) {
                         anErrorHasBeenLogged = true;
-                        console.log( "should add when logged in - ERROR on findElements dashboard.getAddPostButtonExists() " + theError);
+                        console.log( "should add when logged in - ERROR on dashboardHelper.mustExistPostWithPostfix() " + theError);
                     }
                     done.fail( theError);
                 });

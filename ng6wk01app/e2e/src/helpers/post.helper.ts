@@ -26,11 +26,6 @@ export class PostHelper {
 
 
 
-    mustExistPostWithPostfix( thePostfix: string) {
-
-    }
-
-
 
 
 

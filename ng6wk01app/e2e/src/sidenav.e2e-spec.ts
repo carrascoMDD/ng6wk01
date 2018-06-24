@@ -40,7 +40,7 @@ describe( 'ng6wk01 Sidenav logged in', () => {
     } );
 
 
-    
+
     it( 'should logged in user toolbar items', (done) => {
 
         if( LOG) {
