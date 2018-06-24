@@ -15,8 +15,9 @@ import {
 }                                  from '@angular/material';
 import { RouterModule,  Routes } from '@angular/router';
 
-import { AuthService }             from "../auth.service";
-import { WelcomeComponent }        from "../welcome/welcome.component";
+import { AuthService }      from "../auth.service";
+import { SidenavService }   from "../sidenav/sidenav-svce";
+import { WelcomeComponent } from "../welcome/welcome.component";
 
 
 import { DashboardComponent } from './dashboard.component';
@@ -55,6 +56,7 @@ describe('DashboardComponent', () => {
                 ],
                 providers:    [
                     AuthService,
+                    SidenavService,
                     { provide: APP_BASE_HREF, useValue: '/' },
                     PostService
                 ],

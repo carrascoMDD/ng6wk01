@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule, Routes }    from "@angular/router";
 import { DashboardComponent }      from "../dashboard/dashboard.component";
 import { PostService }             from "../data/post.service";
+import { SidenavService }          from "../sidenav/sidenav-svce";
 import { WelcomeComponent }        from "../welcome/welcome.component";
 
 import { APP_BASE_HREF } from '@angular/common';
@@ -67,6 +68,7 @@ describe('PostDialogComponent', () => {
                 ],
                 providers:    [
                     PostService,
+                    SidenavService,
                     { provide: APP_BASE_HREF, useValue: '/' },
                     { provide: MatDialogRef, useValue: {} },
                     { provide: MAT_DIALOG_DATA, useValue: [] },

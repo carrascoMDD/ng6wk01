@@ -23,6 +23,7 @@ import { APP_BASE_HREF } from '@angular/common';
 
 import { AuthService }        from './auth.service';
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { SidenavService }     from "./sidenav/sidenav-svce";
 import { WelcomeComponent }   from "./welcome/welcome.component";
 
 
@@ -58,6 +59,7 @@ describe( 'AppComponent', () => {
                 ],
                 providers:    [
                     AuthService,
+                    SidenavService,
                     { provide: APP_BASE_HREF, useValue: '/' }
                 ]
             } ).compileComponents();

@@ -8,7 +8,6 @@ import { FlexLayoutModule }        from '@angular/flex-layout';
 import { FormsModule }             from '@angular/forms';
 
 import 'hammerjs';
-import { Form01Component }         from './form01/form01.component';
 import { SidenavService }          from "./sidenav/sidenav-svce";
 import { WelcomeComponent }        from './welcome/welcome.component';
 import { DashboardComponent }      from './dashboard/dashboard.component';
@@ -29,7 +28,6 @@ import { ConfirmDialogComponent }  from "./confirm-dialog/confirm-dialog.compone
     {
         declarations:    [
             AppComponent,
-            Form01Component,
             WelcomeComponent,
             DashboardComponent,
             PostDialogComponent,
