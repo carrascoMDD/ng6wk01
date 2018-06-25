@@ -1,6 +1,3 @@
-import { browser} from 'protractor';
-
-import { Sidenav }    from '../pageobjects/sidenav.po';
 import { PostDialog } from "../pageobjects/post-dialog.po";
 
 const LOG = true;
@@ -19,7 +16,7 @@ export class PostHelper {
                     aNow.getMinutes() +  ":" +
                     aNow.getSeconds() + "." +
                     aNow.getMilliseconds();
-
+        if(aPostfix){}/*CQT*/
         return aPostfix;
     }
 
@@ -52,7 +49,7 @@ export class PostHelper {
                             console.log( "LoginHelper.fillAndCreatePost - about to postDialog.getBody().sendKeys()");
                         }
 
-                        return postDialog.getBody().sendKeys( "Post Body" + aPostfix)
+                        return postDialog.getBody().sendKeys( "Post Body" + aPostfix);
                     },
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {

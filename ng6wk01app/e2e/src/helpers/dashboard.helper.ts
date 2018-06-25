@@ -95,7 +95,7 @@ export class DashboardHelper {
                             theResolve();
                         }
                         else {
-                            theReject();
+                            theReject( "Not Found");
                         }
                     },
                     ( theError) => {

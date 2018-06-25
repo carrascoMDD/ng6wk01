@@ -2,6 +2,8 @@ import { browser} from 'protractor';
 
 import { Sidenav }    from '../pageobjects/sidenav.po';
 import { LoginAuth0 } from "../pageobjects/loginauth0.po";
+import { Credentials } from "../credentials";
+
 
 const LOG = true;
 
@@ -277,6 +279,7 @@ export class LoginHelper {
     login_typing() {
 
         let loginAuth0 = new LoginAuth0();
+        let credentials = Credentials;
 
         if( LOG) {
             console.log( "LoginHelper.login_typing - about to navigateTo()");
@@ -308,14 +311,20 @@ export class LoginHelper {
                 .then(
                     () => {
                         if( LOG) {
-                            console.log( "LoginHelper.login_typing - about to sendKeys carrascoauth0user01@modeldd.org");
+                            console.log( "LoginHelper.login_typing - about to sendKeys credentials.username");
                         }
-                        loginAuth0.getUserEmail().sendKeys( "carrascoauth0user01@modeldd.org");
 
-                        if( LOG) {
-                            console.log( "LoginHelper.login_typing - about to findElement loginAuth0.getUserPasswordExists()");
-                        }
-                        return browser.driver.findElement( loginAuth0.getUserPasswordExists());
+                        return new Promise( ( otherResolve, otherReject) => {
+                            loginAuth0.getUserEmail().sendKeys( credentials.username)
+                                .then(
+                                    ()=> {
+                                        otherResolve();
+                                    },
+                                    (theError)=> {
+                                        otherReject( theError);
+                                    }
+                                );
+                        });
                     },
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {
@@ -329,16 +338,57 @@ export class LoginHelper {
                 .then(
                     () => {
                         if( LOG) {
-                            console.log( "LoginHelper.login_typing - about to sendKeys Au123th456or");
+                            console.log( "LoginHelper.login_typing - about to findElement loginAuth0.getUserPasswordExists()");
                         }
-                        loginAuth0.getUserPassword().sendKeys( "Au123th456or");
+                        return browser.driver.findElement( loginAuth0.getUserPasswordExists());
+                    },
+                    ( theError) => {
+                        if( LOG && !anErrorHasBeenLogged) {
+                            anErrorHasBeenLogged = true;
+                            console.log( "LoginHelper.login_typing - ERROR on sendKeys credentials.username " + theError);
+                        }
+
+                        throw theError;
+                    }
+                )
+                .then(
+                    () => {
+                        if( LOG) {
+                            console.log( "LoginHelper.login_typing - about to sendKeys credentials.password");
+                        }
+                        return new Promise( ( otherResolve, otherReject) => {
+                            loginAuth0.getUserPassword().sendKeys( credentials.password)
+                                .then(
+                                    ()=> {
+                                        otherResolve();
+                                    },
+                                    (theError)=> {
+                                        otherReject( theError);
+                                    }
+                                );
+                        });
+                    },
+                    ( theError) => {
+                        if( LOG && !anErrorHasBeenLogged) {
+                            anErrorHasBeenLogged = true;
+                            console.log( "LoginHelper.login_typing - ERROR on findElement loginAuth0.getUserPasswordExists() " + theError);
+                        }
+
+                        throw theError;
+                    }
+                )
+                .then(
+                    () => {
+                        if( LOG) {
+                            console.log( "LoginHelper.login_typing - about to findElement getLoginButtonExists()");
+                        }
 
                         return browser.driver.findElement( loginAuth0.getLoginButtonExists());
                     },
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {
                             anErrorHasBeenLogged = true;
-                            console.log( "LoginHelper.login_typing - ERROR on sendKeys carrascoauth0user01@modeldd.org " + theError);
+                            console.log( "LoginHelper.login_typing - ERROR on sendKeys Credentials.password " + theError);
                         }
 
                         throw theError;
@@ -355,7 +405,7 @@ export class LoginHelper {
                     ( theError) => {
                         if( LOG && !anErrorHasBeenLogged) {
                             anErrorHasBeenLogged = true;
-                            console.log( "LoginHelper.login_typing - ERROR on sendKeys Au123th456or " + theError);
+                            console.log( "LoginHelper.login_typing - ERROR on findElement getLoginButtonExists() " + theError);
                         }
                         throw theError;
                     }
