@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Router }     from '@angular/router';
-import * as auth0     from 'auth0-js';
+import { Injectable }      from '@angular/core';
+import { Router }          from '@angular/router';
+import * as auth0          from 'auth0-js';
+import { HttpClient }      from '@angular/common/http';
 
 // why do you need defining window as any?
 // check this: https://github.com/aws/aws-amplify/issues/678#issuecomment-389106098
@@ -14,45 +15,91 @@ import * as auth0     from 'auth0-js';
 @Injectable()
 export class AuthService {
 
-    auth0 = new auth0.WebAuth(
-        {
-            clientID:     'nByDhrOtyqkhL1FDsnQG8qjSNlvrMIjN',
-            domain:       'modeldd.eu.auth0.com',
-            responseType: 'token id_token',
-            redirectUri:  'http://localhost:4200/',
-            scope:        'openid'
-        } );
+    auth0: auth0.WebAuth = null;
 
 
+    constructor( public router: Router, private http: HttpClient ) {
+    }
 
 
-    constructor( public router: Router ) {
+    private getorCreateAuth0(): Promise<auth0.WebAuth> {
+        if( this.auth0) {
+            return Promise.resolve( this.auth0);
+        }
+
+        return new Promise( ( theResolve, theReject) => {
+            this.http.get( "/assets/auth.webauth.json").subscribe(
+                ( theWebAuthSettings) => {
+                    if( !theWebAuthSettings) {
+                        console.log( "No auth0 webauth settings retrieved");
+                        alert( "No auth0 webauth settings retrieved");
+                        return;
+                    }
+
+                    this.auth0 = new auth0.WebAuth(
+                        {
+                            clientID:     theWebAuthSettings[ "clientID"],
+                            domain:       theWebAuthSettings[ "domain"],
+                            responseType: theWebAuthSettings[ "responseType"],
+                            redirectUri:  theWebAuthSettings[ "redirectUri"],
+                            scope:        theWebAuthSettings[ "scope"]
+                        }
+                    );
+                    theResolve( this.auth0);
+                },
+                ( theError) => {
+                    console.log( "Error retrieving auth0 webauth settings " + theError);
+                    alert( "Error retrieving auth0 webauth settings");
+                    theReject();
+                }
+            )
+        });
     }
 
 
 
 
     public login(): void {
-        this.auth0.authorize();
+        this.getorCreateAuth0()
+            .then(
+                ( theAuth0) => {
+                    theAuth0.authorize();
+                },
+                ( theError) => {
+                    console.log( "Error getorCreateAuth0 " + theError);
+                    alert( "Error getorCreateAuth0");
+                }
+            );
     }
 
 
 
 
     public handleAuthentication(): void {
-        this.auth0.parseHash( ( err, authResult ) => {
-            if( authResult && authResult.accessToken && authResult.idToken ) {
-                window.location.hash = '';
-                this.setSession( authResult );
-                this.router.navigate( [ '/dashboard' ] );
-            }
-            else {
-                if( err ) {
+        this.getorCreateAuth0()
+            .then(
+                ( theAuth0) => {
+                    theAuth0.parseHash( ( err, authResult ) => {
+                        if( authResult && authResult.accessToken && authResult.idToken ) {
+                            window.location.hash = '';
+                            this.setSession( authResult );
+                            this.router.navigate( [ '/dashboard' ] );
+                        }
+                        else {
+                            if( err ) {
+                                this.router.navigate( [ '/' ] );
+                                console.log( err );
+                            }
+                        }
+                    } );
+                },
+                ( theError) => {
                     this.router.navigate( [ '/' ] );
-                    console.log( err );
+                    console.log( theError );
                 }
-            }
-        } );
+            );
+
+
     }
 
 
